@@ -1,3 +1,10 @@
+/**
+ * Mung XML text.
+ *
+ * [➡️ GitHub repo](https://github.com/clearlylocal/xml-munger)
+ * @module
+ */
+
 // deno-lint-ignore-file no-fallthrough
 
 import type { Cheerio, Element } from 'cheerio'
