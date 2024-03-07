@@ -9,9 +9,9 @@ import { unreachable } from 'std/assert/unreachable.ts'
 
 const parseSelector = createParser()
 
-export type MungParams = {
+export interface MungOptions {
 	/** Apply this function to the content before writing it */
-	transform: (x: string) => string
+	fn: (x: string) => string
 	/** Run for each matching element of selector */
 	each: string
 	/** Get the content of this selector */
@@ -44,7 +44,38 @@ function skipBy(input: string, skip: Pick<RegExp, typeof Symbol.matchAll>) {
 	return out
 }
 
-export function mung(xml: string, { transform, each, from, to, overwrite, skip }: MungParams) {
+/**
+ * Mung XML text content into some other form by means of a transform function.
+ *
+ * @param xml - XML content to mung
+ * @param options - Options describing how to mung the XML content
+ * @returns The munged XML
+ *
+ * @example
+ *
+ * ```ts
+ * import { mung } from './mung.ts'
+ * import { assertEquals } from 'std/assert/mod.ts'
+ *
+ * const fn = (s: string) => s.toUpperCase()
+ * const options = { each: 'a', from: 'b', to: 'c', fn }
+ *
+ * const before = `<xml>
+ * 	<a><b>text 1</b></a>
+ * 	<a><b>text 2</b></a>
+ * </xml>`
+ *
+ * const after = `<xml>
+ * 	<a><b>text 1</b><c>TEXT 1</c></a>
+ * 	<a><b>text 2</b><c>TEXT 2</c></a>
+ * </xml>`
+ *
+ * assertEquals(mung(before, options), after)
+ * ```
+ */
+export function mung(xml: string, options: MungOptions) {
+	const { fn, each, from, to, overwrite, skip } = options
+
 	const $ = load(xml, { xml: true })
 
 	const rootToken = parseSelector(to)
@@ -142,7 +173,7 @@ export function mung(xml: string, { transform, each, from, to, overwrite, skip }
 					const unescaped = unescape(x)
 					const segs = skip ? skipBy(unescaped, skip) : [unescaped]
 
-					return segs.map((x, i) => escape(i % 2 ? x : transform(x)))
+					return segs.map((x, i) => escape(i % 2 ? x : fn(x)))
 				})
 				.join(''),
 		)

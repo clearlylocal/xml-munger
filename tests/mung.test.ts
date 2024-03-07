@@ -1,5 +1,5 @@
 import { load } from 'cheerio'
-import { mung, type MungParams } from '../src/mung.ts'
+import { mung, type MungOptions } from '../src/mung.ts'
 import { assertEquals } from 'std/assert/mod.ts'
 import { join } from 'std/path/mod.ts'
 
@@ -7,8 +7,26 @@ const fixturesDirPath = './tests/fixtures/'
 const xliffFileName = 'example.xliff'
 
 Deno.test(mung.name, async (t) => {
-	await t.step('Simple example', () => {
-		const xml = `<xml>
+	await t.step('Simple examples', async (t) => {
+		await t.step('Docs', () => {
+			const fn = (s: string) => s.toUpperCase()
+			const options = { each: 'a', from: 'b', to: 'c', fn }
+
+			const before = `<xml>
+    <a><b>text 1</b></a>
+    <a><b>text 2</b></a>
+</xml>`
+
+			const after = `<xml>
+    <a><b>text 1</b><c>TEXT 1</c></a>
+    <a><b>text 2</b><c>TEXT 2</c></a>
+</xml>`
+
+			assertEquals(mung(before, options), after)
+		})
+
+		await t.step('Overwriting', () => {
+			const xml = `<xml>
 			<g>
 				<from>Sender 1</from>
 				<to/>
@@ -19,17 +37,17 @@ Deno.test(mung.name, async (t) => {
 			</g>
 		</xml>`
 
-		const out = mung(xml, {
-			each: 'g',
-			from: 'from',
-			to: 'to',
-			transform: (s) => s.toUpperCase(),
-			overwrite: true,
-		})
+			const out = mung(xml, {
+				each: 'g',
+				from: 'from',
+				to: 'to',
+				fn: (s) => s.toUpperCase(),
+				overwrite: true,
+			})
 
-		assertEquals(
-			out,
-			`<xml>
+			assertEquals(
+				out,
+				`<xml>
 			<g>
 				<from>Sender 1</from>
 				<to>SENDER 1</to>
@@ -39,7 +57,8 @@ Deno.test(mung.name, async (t) => {
 				<to>SENDER 2</to>
 			</g>
 		</xml>`,
-		)
+			)
+		})
 	})
 
 	await t.step(xliffFileName, async (t) => {
@@ -49,8 +68,8 @@ Deno.test(mung.name, async (t) => {
 			each: 'trans-unit',
 			from: 'source',
 			to: 'target',
-			transform: (s) => s.toUpperCase(),
-		} satisfies Partial<MungParams>
+			fn: (s) => s.toUpperCase(),
+		} satisfies Partial<MungOptions>
 
 		await t.step('Content', async (t) => {
 			const defaults = xliffTestDefaults

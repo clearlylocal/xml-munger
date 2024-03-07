@@ -1,7 +1,8 @@
 {
 	"lock": false,
 	"tasks": {
-		"cli": "deno run -A src/cli/main.ts"
+		"test": "deno test -A --watch",
+		"docs": "deno doc --html --name='XML Munger' src && touch docs/.nojekyll"
 	},
 	"imports": {
 		"std/": "https://deno.land/std@0.208.0/",
@@ -17,7 +18,7 @@
 		"indentWidth": 4,
 		"singleQuote": true,
 		"proseWrap": "preserve",
-		"exclude": []
+		"exclude": ["docs"]
 	},
 	"compilerOptions": { "strict": true },
 	"lint": { "rules": { "tags": ["recommended"] } },
