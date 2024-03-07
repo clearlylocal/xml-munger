@@ -1,5 +1,5 @@
 import { load } from 'cheerio'
-import { mung, type MungOptions } from '../src/mung.ts'
+import { mung, type MungOptions } from '../src/mod.ts'
 import { assertEquals } from 'std/assert/mod.ts'
 import { join } from 'std/path/mod.ts'
 

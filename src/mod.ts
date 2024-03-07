@@ -1,4 +1,5 @@
 // deno-lint-ignore-file no-fallthrough
+
 import type { Cheerio, Element } from 'cheerio'
 import { load } from 'cheerio'
 import { escape, unescape } from 'std/html/entities.ts'
@@ -54,7 +55,7 @@ function skipBy(input: string, skip: Pick<RegExp, typeof Symbol.matchAll>) {
  * @example
  *
  * ```ts
- * import { mung } from './mung.ts'
+ * import { mung } from 'xml-munger/mod.ts'
  * import { assertEquals } from 'std/assert/mod.ts'
  *
  * const fn = (s: string) => s.toUpperCase()
