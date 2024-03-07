@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+	<file source-language="en-US" target-language="xx-XX">
+		<body>
+			<group id="content-tests" xml:space="preserve">
+				<trans-unit id="basic">
+					<source>Basic</source>
+					<target/>
+				</trans-unit>
+				<trans-unit id="populated-target">
+					<source>Populated target</source>
+					<target>...</target>
+				</trans-unit>
+				<trans-unit id="contains-tag">
+					<source>Contains <g>tag</g> + trailing</source>
+					<target/>
+				</trans-unit>
+				<trans-unit id="contains-placeholder">
+					<source>Contains {placeholder} + trailing</source>
+					<target/>
+				</trans-unit>
+				<trans-unit id="contains-angle-placeholder">
+					<source>Contains &lt;placeholder&gt; + trailing</source>
+					<target/>
+				</trans-unit>
+				<trans-unit id="contains-url">
+					<source>Contains https://example.com/url</source>
+					<target/>
+				</trans-unit>
+			</group>
+			<group id="alt-trans-tests" xml:space="preserve">
+				<trans-unit id="no-alt-trans">
+					<source>No alt-trans</source>
+					<target/>
+				</trans-unit>
+				<trans-unit id="empty-alt-trans-mt">
+					<source>Empty alt-trans</source>
+					<target/>
+					<alt-trans origin="mt"/>
+				</trans-unit>
+				<trans-unit id="empty-alt-trans-mt-target">
+					<source>Empty alt-trans target</source>
+					<target/>
+					<alt-trans origin="mt"><target/></alt-trans>
+				</trans-unit>
+				<trans-unit id="populated-alt-trans-mt">
+					<source>Populated alt-trans</source>
+					<target/>
+					<alt-trans origin="mt"><target>...</target></alt-trans>
+				</trans-unit>
+				<trans-unit id="alt-trans-other">
+					<source>alt-trans other</source>
+					<target/>
+					<alt-trans origin="other"><target>...</target></alt-trans>
+				</trans-unit>
+				<trans-unit id="alt-trans-target-before-main-target">
+					<source>alt-trans target before main target</source>
+					<alt-trans origin="mt"><target/></alt-trans>
+					<target>...</target>
+				</trans-unit>
+			</group>
+		</body>
+	</file>
+</xliff>
