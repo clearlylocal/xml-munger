@@ -1,7 +1,7 @@
 import { load } from 'cheerio'
 import { mung, type MungOptions } from '../src/mod.ts'
-import { assertEquals } from 'std/assert/mod.ts'
-import { join } from 'std/path/mod.ts'
+import { assertEquals } from '@std/assert'
+import { join } from '@std/path'
 import Transliterator from 'https://esm.sh/v135/lotin-kirill@0.1.3'
 
 const fixturesDirPath = './tests/fixtures/'

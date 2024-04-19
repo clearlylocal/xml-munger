@@ -9,11 +9,11 @@
 
 import type { Cheerio, Element } from 'cheerio'
 import { load } from 'cheerio'
-import { escape, unescape } from 'std/html/entities.ts'
+import { escape, unescape } from '@std/html'
 import { createParser, render } from 'css-selector-parser'
-import { assert } from 'std/assert/assert.ts'
-import { unimplemented } from 'std/assert/unimplemented.ts'
-import { unreachable } from 'std/assert/unreachable.ts'
+import { assert } from '@std/assert'
+import { unimplemented } from '@std/assert'
+import { unreachable } from '@std/assert'
 
 const parseSelector = createParser()
 
@@ -62,8 +62,8 @@ function skipBy(input: string, skip: Pick<RegExp, typeof Symbol.matchAll>) {
  * @example
  *
  * ```ts
- * import { mung } from 'xml-munger/mod.ts'
- * import { assertEquals } from 'std/assert/mod.ts'
+ * import { mung } from '@clearlylocal/xml-munger'
+ * import { assertEquals } from '@std/assert'
  *
  * const fn = (s: string) => s.toUpperCase()
  * const options = { each: 'a', from: 'b', to: 'c', fn }
@@ -81,7 +81,7 @@ function skipBy(input: string, skip: Pick<RegExp, typeof Symbol.matchAll>) {
  * assertEquals(mung(before, options), after)
  * ```
  */
-export function mung(xml: string, options: MungOptions) {
+export function mung(xml: string, options: MungOptions): string {
 	const { fn, each, from, to, overwrite, skip } = options
 
 	const $ = load(xml, { xml: true })
